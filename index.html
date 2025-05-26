@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechStore - Matériel Informatique au Maroc</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #3b82f6;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --success: #10b981;
+            --danger: #ef4444;
+            --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        body {
+            background-color: #f1f5f9;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 1rem 5%;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--dark);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--primary);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+        }
+        
+        .search-box input {
+            border: none;
+            background: transparent;
+            padding: 0.5rem;
+            outline: none;
+            width: 200px;
+        }
+        
+        .cart-btn {
+            position: relative;
+            background: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1517336714731-489689fd1ca8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 5rem 5%;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            border-color: var(--secondary);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+        }
+        
+        /* Categories */
+        .category-nav {
+            padding: 3rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--dark);
+        }
+        
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            text-decoration: none;
+            color: var(--dark);
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+        
+        .category-card h3 {
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        /* Products */
+        .products {
+            padding: 3rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .view-all {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--danger);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-meta {
+            margin-bottom: 1rem;
+        }
+        
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .old-price {
+            font-size: 0.9rem;
+            color: var(--gray);
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+        }
+        
+        .rating {
+            color: #f59e0b;
+            margin-top: 0.3rem;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .add-to-cart {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            background: var(--secondary);
+        }
+        
+        .wishlist {
+            background: none;
+            border: none;
+            color: var(--gray);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .wishlist.active, .wishlist:hover {
+            color: var(--danger);
+        }
+        
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 3rem 5%;
+            background: white;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 3rem 5% 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-section p, .footer-section a {
+            opacity: 0.8;
+            margin-bottom: 0.8rem;
+            display: block;
+            text-decoration: none;
+            color: white;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-section a:hover {
+            opacity: 1;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            max-width: 1400px;
+            margin: 2rem auto 0;
+        }
+        
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <div class="logo">Tech<span>Store</span></div>
+            
+            <nav class="nav-links">
+                <a href="#" class="active">Accueil</a>
+                <a href="#">Ordinateurs</a>
+                <a href="#">Composants</a>
+                <a href="#">Périphériques</a>
+                <a href="#">Contact</a>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="search-box">
+                    <input type="text" placeholder="Rechercher...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Matériel Informatique Professionnel</h2>
+                <p>Découvrez nos dernières arrivées et promotions exceptionnelles</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Voir les promotions</a>
+                    <a href="#" class="btn btn-secondary">Découvrir nos produits</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="category-nav">
+            <h2 class="section-title">Nos Catégories</h2>
+            <div class="category-grid">
+                <a href="#" class="category-card">
+                    <img src="https://images.unsplash.com/photo-1552831388-6a0b3575b32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Ordinateurs">
+                    <h3>Ordinateurs</h3>
+                </a>
+                <a href="#" class="category-card">
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Laptops">
+                    <h3>Laptops</h3>
+                </a>
+                <a href="#" class="category-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Composants">
+                    <h3>Composants</h3>
+                </a>
+                <a href="#" class="category-card">
+                    <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Périphériques">
+                    <h3>Périphériques</h3>
+                </a>
+            </div>
+        </section>
+
+        <section class="products">
+            <div class="section-header">
+                <h2 class="section-title">Nos Produits Phares</h2>
+                <a href="#" class="view-all">Voir tout <i class="fas fa-arrow-right"></i></a>
+            </div>
+            
+            <div class="product-grid">
+                <!-- 1. PC Gamer -->
+                <div class="product-card">
+                    <div class="product-badge">Nouveau</div>
+                    <img src="https://images.unsplash.com/photo-1593640408182-31c228ca7b89?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="PC Gamer RTX 4080">
+                    <div class="product-info">
+                        <h3>PC Gamer RTX 4080</h3>
+                        <div class="product-meta">
+                            <span class="price">15,999 DH</span>
+                            <span class="old-price">17,499 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. PC Bureau -->
+                <div class="product-card">
+                    <div class="product-badge">-15%</div>
+                    <img src="https://images.unsplash.com/photo-1552831388-6a0b3575b32a?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="PC Bureau Professionnel">
+                    <div class="product-info">
+                        <h3>PC Bureau Professionnel</h3>
+                        <div class="product-meta">
+                            <span class="price">7,999 DH</span>
+                            <span class="old-price">9,399 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Laptop Dell -->
+                <div class="product-card">
+                    <div class="product-badge">-10%</div>
+                    <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Laptop Dell XPS 15">
+                    <div class="product-info">
+                        <h3>Laptop Dell XPS 15</h3>
+                        <div class="product-meta">
+                            <span class="price">12,499 DH</span>
+                            <span class="old-price">13,899 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. MacBook Pro -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="MacBook Pro M2">
+                    <div class="product-info">
+                        <h3>MacBook Pro M2</h3>
+                        <div class="product-meta">
+                            <span class="price">22,999 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Intel Core i9 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Intel Core i9-13900K">
+                    <div class="product-info">
+                        <h3>Intel Core i9-13900K</h3>
+                        <div class="product-meta">
+                            <span class="price">4,299 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 6. AMD Ryzen 9 -->
+                <div class="product-card">
+                    <div class="product-badge">Meilleur vente</div>
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="AMD Ryzen 9 7950X">
+                    <div class="product-info">
+                        <h3>AMD Ryzen 9 7950X</h3>
+                        <div class="product-meta">
+                            <span class="price">4,199 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 7. NVIDIA RTX 4090 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="NVIDIA RTX 4090">
+                    <div class="product-info">
+                        <h3>NVIDIA RTX 4090</h3>
+                        <div class="product-meta">
+                            <span class="price">19,999 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 8. AMD RX 7900 -->
+                <div class="product-card">
+                    <div class="product-badge">-5%</div>
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="AMD RX 7900 XTX">
+                    <div class="product-info">
+                        <h3>AMD RX 7900 XTX</h3>
+                        <div class="product-meta">
+                            <span class="price">14,499 DH</span>
+                            <span class="old-price">15,299 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 9. RAM DDR5 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="RAM DDR5 32GB">
+                    <div class="product-info">
+                        <h3>Corsair DDR5 32GB</h3>
+                        <div class="product-meta">
+                            <span class="price">1,799 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 10. SSD 1TB -->
+                <div class="product-card">
+                    <div class="product-badge">Promo</div>
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="SSD 1TB">
+                    <div class="product-info">
+                        <h3>Samsung 980 Pro 1TB</h3>
+                        <div class="product-meta">
+                            <span class="price">899 DH</span>
+                            <span class="old-price">1,099 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 11. HDD 2TB -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="HDD 2TB">
+                    <div class="product-info">
+                        <h3>Seagate BarraCuda 2TB</h3>
+                        <div class="product-meta">
+                            <span class="price">599 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 12. Carte Mère ASUS -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Carte Mère ASUS">
+                    <div class="product-info">
+                        <h3>ASUS ROG Z790</h3>
+                        <div class="product-meta">
+                            <span class="price">3,499 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 13. Alimentation PC -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Alimentation PC">
+                    <div class="product-info">
+                        <h3>Corsair RM850x</h3>
+                        <div class="product-meta">
+                            <span class="price">1,499 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 14. Écran 4K -->
+                <div class="product-card">
+                    <div class="product-badge">Nouveau</div>
+                    <img src="https://images.unsplash.com/photo-1546538915-a9e2c8d2a8e1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Écran 4K">
+                    <div class="product-info">
+                        <h3>LG UltraGear 4K</h3>
+                        <div class="product-meta">
+                            <span class="price">5,999 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 15. Clavier Mécanique -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1587829741301-dc798b83add3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Clavier Mécanique">
+                    <div class="product-info">
+                        <h3>Razer BlackWidow</h3>
+                        <div class="product-meta">
+                            <span class="price">1,199 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 16. Souris Gaming -->
+                <div class="product-card">
+                    <div class="product-badge">-20%</div>
+                    <img src="https://images.unsplash.com/photo-1527814050087-3793815479db?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Souris Gaming">
+                    <div class="product-info">
+                        <h3>Logitech G502</h3>
+                        <div class="product-meta">
+                            <span class="price">699 DH</span>
+                            <span class="old-price">899 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 17. Routeur WiFi 6 -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Routeur WiFi 6">
+                    <div class="product-info">
+                        <h3>TP-Link Archer AX6000</h3>
+                        <div class="product-meta">
+                            <span class="price">1,899 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 18. Refroidissement PC -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Refroidissement PC">
+                    <div class="product-info">
+                        <h3>NZXT Kraken X73</h3>
+                        <div class="product-meta">
+                            <span class="price">1,599 DH</span>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 19. Boîtier PC -->
+                <div class="product-card">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Boîtier PC">
+                    <div class="product-info">
+                        <h3>Lian Li PC-O11</h3>
+                        <div class="product-meta">
+                            <span class="price">2,199 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 20. Webcam 4K -->
+                <div class="product-card">
+                    <div class="product-badge">Nouveau</div>
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Webcam 4K">
+                    <div class="product-info">
+                        <h3>Logitech Brio 4K</h3>
+                        <div class="product-meta">
+                            <span class="price">1,499 DH</span>
+                        </div>
+                        <div class="product-actions">
+                            <button class="add-to-cart">Ajouter au panier</button>
+                            <button class="wishlist"><i class="far fa-heart"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-shipping-fast"></i>
+                <h3>Livraison Rapide</h3>
+                <p>Livraison en 24-48h dans tout le Maroc</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Garantie 2 Ans</h3>
+                <p>Tous nos produits sont garantis</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-credit-card"></i>
+                <h3>Paiement Sécurisé</h3>
+                <p>Paiement en ligne 100% sécurisé</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-headset"></i>
+                <h3>Support 24/7</h3>
+                <p>Assistance technique disponible</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TechStore</h3>
+                <p>Votre boutique en ligne de matériel informatique au Maroc depuis 2023.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Liens Rapides</h3>
+                <a href="#">Accueil</a>
+                <a href="#">Produits</a>
+                <a href="#">Promotions</a>
+                <a href="#">Nouveautés</a>
+                <a href="#">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Informations</h3>
+                <a href="#">A propos</a>
+                <a href="#">Livraison</a>
+                <a href="#">Paiement</a>
+                <a href="#">Retours</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Rue Mohammed VI, Casablanca</p>
+                <p><i class="fas fa-phone"></i> +212 6 12 34 56 78</p>
+                <p><i class="fas fa-envelope"></i> contact@techstore.ma</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2023 TechStore. Tous droits réservés.</p>
+            <div class="payment-methods">
+                <i class="fab fa-cc-visa"></i>
+                <i class="fab fa-cc-mastercard"></i>
+                <i class="fab fa-cc-paypal"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        let cart = [];
+        const cartBtn = document.querySelector('.cart-btn');
+        const cartCount = document.querySelector('.cart-count');
+        const addToCartBtns = document.querySelectorAll('.add-to-cart');
+        const wishlistBtns = document.querySelectorAll('.wishlist');
+        
+        // Add to cart
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const productCard = btn.closest('.product-card');
+                const productName = productCard.querySelector('h3').textContent;
+                const productPrice = productCard.querySelector('.price').textContent;
+                
+                cart.push({
+                    name: productName,
+                    price: productPrice
+                });
+                
+                updateCartCount();
+                showNotification(`${productName} ajouté au panier`);
+            });
+        });
+        
+        // Wishlist toggle
+        wishlistBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.classList.toggle('active');
+                btn.innerHTML = btn.classList.contains('active') ? 
+                    '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+            });
+        });
+        
+        // Update cart count
+        function updateCartCount() {
+            cartCount.textContent = cart.length;
+            cartCount.style.display = cart.length > 0 ? 'flex' : 'none';
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Cart modal (would be implemented fully in a separate JS file)
+        cartBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                showNotification('Votre panier est vide');
+                return;
+            }
+            // In a real implementation, this would show a modal with cart items
+            alert(`Vous avez ${cart.length} article(s) dans votre panier`);
+        });
+        
+        // Add some sample products to the cart for demo
+        updateCartCount();
+    </script>
+</body>
+</html>
